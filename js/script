@@ -1,0 +1,175 @@
+const books = [
+    {
+        pdf:'https://napontadospes693885424.wordpress.com/wp-content/uploads/2019/12/vermelho-branco-e-sangue-azul-casey-mcquiston.pdf',
+        imgSrc: 'img/livro1.jpg',
+        title: 'Vermelho, branco e azul sangue',
+        author: 'Casey McQuiston',
+        description: ' Um romance avassalador.',
+    },
+    {
+        pdf:'https://reciclaleitores.com.br/wp-content/uploads/2020/10/ORGULHO-E-PRECONCEITO-Austen-Jane.pdf',
+        imgSrc: 'img/livro2.jpg',
+        title: 'Orgulho e preconceito',
+        author: 'Jane Austen',
+        description: 'Um romance de época.',
+    },
+    {
+        pdf:'https://multimidia.gazetadopovo.com.br/media/info/2022/202209/1984/e-book-1984.pdf',
+        imgSrc: 'img/livro3.jpg',
+        title: '1984',
+        author: 'George Orwell',
+        description:'Lançada poucos meses antes da morte do autor, é uma obra magistral que ainda se impõe como uma poderosa reflexão ficcional sobre a essência nefasta de qualquer forma de poder totalitário.',
+    },
+    {
+        pdf:'https://www.simonandschuster.com/books/On-Trails/Robert-Moor/9781476739236',
+        imgSrc: 'img/livro4.jpg',
+        title: 'Cem anos de solidão',
+        author: 'Gabriel Garcia',
+        description: 'Romance fundamental na história da literatura,  Cem anos de solidão apresenta uma das mais fascinantes aventuras literárias do século XX.',
+    },
+    {
+        pdf:'https://www.mundocristao.com.br/wp-content/uploads/2022/04/A-Dama-seu-Amado-e-seu-Senhor.pdf',
+        imgSrc: 'img/livro5.jpg',
+        title: 'A dama seu amado e seu senhor.',
+        author: 'Bruno Eduardo Freitas Gontijo',
+        description: ' Um ensaio sobre a realidade.',
+    },
+    {
+        pdf:'https://ddcus.org/pdf/summer_reading/10th_Grade/O%20Hobbit%20-%20J_%20R_%20R_%20Tolkien%20-%20BEAP%2010%20Portuguese.pdf',
+        imgSrc: 'img/livro6.jpg',
+        title: 'O Hobbit',
+        author: 'J.R.R Tolkien',
+        description: ' Um livro da saga Senhor dos aneis.',
+    },
+    {
+        pdf:'https://www.poramoraosalvador.com.br/livros/cartasdeumdiaboaseuaprendiz.pdf',
+        imgSrc: 'img/livro7.jpg',
+        title: 'Cartas de um diabo e seu aprendiz',
+        author: 'C.S. Lewis',
+        description: 'Um conto literário.',
+    },
+    {
+        pdf:'https://dlivros.com/livro/quebrando-gelo-maple-hills-1-hannah-grace',
+        imgSrc: 'img/livro8.jpg',
+        title: 'Quebrando o gelo',
+        author: 'Hannah Grace',
+        description: 'Um romance britânico.',
+    },
+    {
+        pdf:'https://www.ebooksbrasil.org/adobeebook/alicep.pdf',
+        imgSrc: 'img/livro9.jpg',
+        title: 'Alice no país das maravilhas',
+        author: 'Lewis Caroll',
+        description: 'O escritor transformou sua amizade por uma criança em uma iconoclasta obra literária.',
+    },
+    {
+        pdf:'https://dlivros.com/livro/nem-te-conto-emily-henry',
+        imgSrc: ' img/livro10.jpg',
+        title: 'Nem te conto',
+        author: 'Emily Henry',
+        description: 'Um romance divertido sobre uma mulher e um homem que são opostos.',
+    },
+    {
+        pdf:'https://www.sesirs.org.br/sites/default/files/paragraph--files/o_pequeno_principe_-_antoine_de_saint-exupery_1.pdf',
+        imgSrc: ' img/livro11.jpg',
+        title: 'O pequeno príncipe',
+        author: 'Antoine De Saint-Exupéry',
+        description: 'Este livro conta a história de uma criança que vive em um planeta bem pequeno.',
+    },
+    {
+        pdf:'https://www.assisprofessor.com.br/documentos/livros/Os_Miseraveis_Victor_Hugo.pdf',
+        imgSrc: 'img/livro12.jpg',
+        title: 'Os miseráveis',
+        author: 'Victor Hugo',
+        description: 'Uma crítica social à extrema pobreza e riqueza.',
+    },
+];
+
+//Função para adicionar os livros á página
+function addBooksToPage() {
+    const bookList = document.querySelector('.book-list');
+
+    books.forEach(book => {
+        const bookElement = document.createElement('div');
+        bookElement.classList.add('book');
+
+        bookElement.innerHTML = `
+       <div class="flex">
+         <img src="${book.imgSrc}" alt="">
+         <div>
+          <h3>${book.title}<h3>
+          <p>Autor: ${book.author}</p>
+          <p>Descrição: ${book.description}<p/>
+          <a href="detailsBook.html?bookId=${book.title}"><button type="button">Ver Livro</button></a>
+         </div>
+       </div>
+       `;
+
+        bookList.appendChild(bookElement);
+    })
+}
+
+function viewDataForm() {
+    const form = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const message = formData.get('message');
+
+        const messageText = `Nome: ${name}<br>Email: ${email}<br><Mensagem: ${menssage}`;
+
+        formMessage.innerHTML = messageText;
+
+        form.reset();
+
+    })
+}
+
+function searchBooks() {
+    // Seleciona o campo de entrada de pesquisa e obtém o valor
+    const searchInput = document.getElementById('searchInput');
+    const query = searchInput.value.toLowerCase();
+  
+    // Filtra a lista de livros com base na consulta de pesquisa
+    const filteredBooks = books.filter(book => 
+      book.title.toLowerCase().includes(query)
+    )
+  
+    // Atualiza a lista de livros exibida na página
+    addBooksToPage(filteredBooks);
+  }
+
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+function addDetailsBook() {
+    // Obtém o título do livro da Url
+    const bookId = getQueryParam('bookId');
+  
+    // Encontrar o livro correspondente ao bookId
+    const bookData = books.find(book => book.title === bookId);
+  
+    // Exibir os detalhes do livro
+    if (bookData) {
+      document.getElementById('bookImage').src = bookData.imgSrc;
+      document.getElementById('bookTitle').textContent = `Livro: ${bookData.title}`;
+      document.getElementById('bookAuthor').textContent = `Autor: ${bookData.author}`;
+      document.getElementById('bookDescription').textContent = `Resumo: ${bookData.resume}`;
+
+      const readBookButton = document.getElementById('readBookButton');
+      readBookButton.href = bookData.pdf;
+    } else {
+      document.getElementById('bookTitle').textContent = "Livro não encontrado";
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', addBooksToPage);
+  document.addEventListener('DOMContentLoaded', viewDataForm);
+  document.addEventListener('DOMContentLoaded', addDetailsBook);
